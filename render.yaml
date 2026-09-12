@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: heritage-fine-art-uk
+    env: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm install
+    startCommand: node shopify_prodigi_bridge.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: PRODIGI_ENVIRONMENT
+        value: live
+      - key: PRODIGI_API_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: RETURNLESS_REFUND_SECRET
+        sync: false
