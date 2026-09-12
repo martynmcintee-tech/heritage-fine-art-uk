@@ -232,6 +232,61 @@ app.get("/robots.txt", (req, res) => {
 });
 
 /**
+ * STANDALONE REFUND & RETURN POLICY PAGE (For Google Merchant Center & Customers)
+ */
+app.get("/refund-policy", (req, res) => {
+  const html = `<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refund & Returnless Damage Policy | Heritage Fine Art UK</title>
+  <meta name="description" content="UK Consumer Rights compliant refund and return policy for Heritage Fine Art UK. Free priority reprint for transit damage.">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { background: #fbf9f5; color: #1b241e; font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.7; padding: 40px 20px; }
+    .card { max-width: 760px; margin: 0 auto; background: #ffffff; border: 1px solid #e6dfd5; padding: 40px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+    h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 20px; color: #1b241e; }
+    h2 { font-size: 1.25rem; margin-top: 24px; margin-bottom: 10px; color: #1e3a2b; border-bottom: 1px solid #f0eae1; padding-bottom: 6px; }
+    p, li { color: #5e6962; margin-bottom: 12px; font-size: 0.96rem; }
+    ol, ul { margin-left: 24px; margin-bottom: 16px; }
+    .badge { display: inline-block; background: #eaf2ec; color: #1e3a2b; padding: 4px 10px; border-radius: 4px; font-weight: 600; font-size: 0.85rem; margin-bottom: 16px; }
+    a { color: #8c6b3e; text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <a href="/">← Return to Heritage Fine Art UK Storefront</a>
+    <h1 style="margin-top: 20px;">UK Refund &amp; Return Policy</h1>
+    <span class="badge">✓ UK Consumer Rights Act 2015 Compliant</span>
+    
+    <h2>1. Returnless Transit Damage Guarantee</h2>
+    <p>Every print is custom produced to order using 12-colour archival pigment giclée in Alton, Hampshire and dispatched in heavy-duty protective postal tubes via Royal Mail 48 Tracked.</p>
+    <p>If your package arrives bent, creased, or damaged by courier handling:</p>
+    <ol>
+      <li>Email us or message support with a photo showing the damage to the print and postal tube.</li>
+      <li><strong>No return required:</strong> You do NOT need to post the damaged print back or queue at a post office.</li>
+      <li>Our automated system immediately submits a brand-new priority reprint at <strong>£0 cost</strong> to you, or provides a 100% full refund to your original payment card.</li>
+    </ol>
+
+    <h2>2. 14-Day Change of Mind Returns</h2>
+    <p>Under statutory UK Consumer Contracts Regulations, you have 14 calendar days from receipt of goods to request a return:</p>
+    <ul>
+      <li>Items must be unused, unmounted, and in their original packaging.</li>
+      <li>Buyer is responsible for return tracked postage within the UK.</li>
+      <li>Once received and inspected, refunds are credited back to your original payment method within 3–5 business days.</li>
+    </ul>
+
+    <h2>3. Contact Details &amp; Support</h2>
+    <p>For any return claims or questions, reply directly to your order confirmation email or contact support@heritage-fine-art-uk.onrender.com.</p>
+  </div>
+</body>
+</html>`;
+  res.send(html);
+});
+
+
+/**
  * PINTEREST NATIVE AUTO-PUBLISH RSS FEED
  * Paste this into Pinterest Settings -> Bulk Create Pins -> Auto-Publish
  */
