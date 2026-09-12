@@ -5,8 +5,16 @@
     "title": "William Morris - Strawberry Thief Fine Art Print",
     "artist": "William Morris (1883)",
     "desc": "Museum-grade giclée print of William Morris' iconic Victorian textile illustration. Printed on 200gsm archival matte paper in the UK.",
-    "tags": ["Botanical", "Victorian", "British Heritage"],
-    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Morris_Strawberry_Thief_1883.jpg"
+    "tags": [
+      "Botanical",
+      "Victorian",
+      "British Heritage"
+    ],
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Morris_Strawberry_Thief_1883.jpg",
+    "status": "active",
+    "edition_limit": 150,
+    "sales_count": 25,
+    "vaulted_at": null
   },
   {
     "code": "HOKUSAI",
@@ -14,8 +22,16 @@
     "title": "Katsushika Hokusai - The Great Wave off Kanagawa",
     "artist": "Katsushika Hokusai (1831)",
     "desc": "Classic Japanese ukiyo-e woodblock masterpiece reproduced with archival giclée pigments on heavy matte art paper. UK printed and dispatched.",
-    "tags": ["Japanese Art", "Woodblock", "Ocean"],
-    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Great_Wave_off_Kanagawa2.jpg"
+    "tags": [
+      "Japanese Art",
+      "Woodblock",
+      "Ocean"
+    ],
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Great_Wave_off_Kanagawa2.jpg",
+    "status": "active",
+    "edition_limit": 200,
+    "sales_count": 37,
+    "vaulted_at": null
   },
   {
     "code": "REDOUTE",
@@ -23,8 +39,16 @@
     "title": "Pierre-Joseph Redouté - Botanical Floral Study",
     "artist": "Pierre-Joseph Redouté (1805)",
     "desc": "Botanical court painter Redouté's delicate French study of flowering botanical blooms. Premium heavyweight fine art paper.",
-    "tags": ["Botanical", "Floral", "French Art"],
-    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/94/Carnations_redoute.JPG"
+    "tags": [
+      "Botanical",
+      "Floral",
+      "French Art"
+    ],
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/94/Carnations_redoute.JPG",
+    "status": "active",
+    "edition_limit": 250,
+    "sales_count": 38,
+    "vaulted_at": null
   },
   {
     "code": "BAUHAUS",
@@ -32,8 +56,16 @@
     "title": "Bauhaus Exhibition Weimar 1923 Modernist Print",
     "artist": "Bauhaus Archive (1923)",
     "desc": "Iconic German modernist exhibition poster featuring striking geometric typography and primary color blocking.",
-    "tags": ["Bauhaus", "Modernist", "Graphic Design"],
-    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/D%C3%B6rte_Helm_-_Bauhaus_Exhibition_Postcard_No._14.jpg"
+    "tags": [
+      "Bauhaus",
+      "Modernist",
+      "Graphic Design"
+    ],
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/D%C3%B6rte_Helm_-_Bauhaus_Exhibition_Postcard_No._14.jpg",
+    "status": "active",
+    "edition_limit": 150,
+    "sales_count": 27,
+    "vaulted_at": null
   },
   {
     "code": "TUBE",
@@ -41,8 +73,16 @@
     "title": "Vintage London Underground Travel Poster",
     "artist": "London Transport (1924)",
     "desc": "Classic 1920s British transport poster celebrating London landmarks. Vibrant vintage lithograph reproduction.",
-    "tags": ["London", "Retro Travel", "Vintage Poster"],
-    "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Brightest_London_is_best_reached_by_Underground%2C_subway_poster%2C_1924.jpg"
+    "tags": [
+      "London",
+      "Retro Travel",
+      "Vintage Poster"
+    ],
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Brightest_London_is_best_reached_by_Underground%2C_subway_poster%2C_1924.jpg",
+    "status": "active",
+    "edition_limit": 200,
+    "sales_count": 13,
+    "vaulted_at": null
   },
   {
     "code": "VANGOGH",
@@ -50,8 +90,16 @@
     "title": "Vincent van Gogh - Almond Blossom Masterpiece",
     "artist": "Vincent van Gogh (1890)",
     "desc": "Poetic post-impressionist floral branches against turquoise skies. Printed using genuine archival inks.",
-    "tags": ["Van Gogh", "Impressionism", "Floral"],
-    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/68/Vincent_van_Gogh_-_Almond_blossom_-_Google_Art_Project.jpg"
+    "tags": [
+      "Van Gogh",
+      "Impressionism",
+      "Floral"
+    ],
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/68/Vincent_van_Gogh_-_Almond_blossom_-_Google_Art_Project.jpg",
+    "status": "vaulted",
+    "edition_limit": 250,
+    "sales_count": 10,
+    "vaulted_at": "2026-09-12T22:16:52.774Z"
   },
   {
     "code": "MONET",
@@ -59,8 +107,16 @@
     "title": "Claude Monet - The Water Lily Pond (Giverny)",
     "artist": "Claude Monet (1916)",
     "desc": "Serene French impressionist landscape featuring blooming water lilies and atmospheric light reflections.",
-    "tags": ["Monet", "French Art", "Impressionism"],
-    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/50/Claude_Monet_044.jpg"
+    "tags": [
+      "Monet",
+      "French Art",
+      "Impressionism"
+    ],
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/50/Claude_Monet_044.jpg",
+    "status": "active",
+    "edition_limit": 150,
+    "sales_count": 20,
+    "vaulted_at": null
   },
   {
     "code": "HERBAL",
@@ -68,8 +124,16 @@
     "title": "Victorian Apothecary & Medicinal Plants Chart",
     "artist": "Köhler's Medizinal-Pflanzen (1887)",
     "desc": "Detailed vintage botanical chart illustrating classic medicinal flora, wildflowers, and apothecary herbs.",
-    "tags": ["Botanical", "Wildflowers", "Vintage Chart"],
-    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Quillaja_saponaria_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-119.jpg"
+    "tags": [
+      "Botanical",
+      "Wildflowers",
+      "Vintage Chart"
+    ],
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Quillaja_saponaria_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-119.jpg",
+    "status": "active",
+    "edition_limit": 200,
+    "sales_count": 34,
+    "vaulted_at": null
   },
   {
     "code": "KLIMT",
@@ -77,8 +141,16 @@
     "title": "Gustav Klimt - The Kiss (Der Kuss)",
     "artist": "Gustav Klimt (1908)",
     "desc": "Vienna Secession gilded masterpiece depicting romantic intimacy in rich decorative symbolism.",
-    "tags": ["Klimt", "Vienna Secession", "Gold Leaf"],
-    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Gustav_Klimt_016.jpg"
+    "tags": [
+      "Klimt",
+      "Vienna Secession",
+      "Gold Leaf"
+    ],
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Gustav_Klimt_016.jpg",
+    "status": "active",
+    "edition_limit": 250,
+    "sales_count": 39,
+    "vaulted_at": null
   },
   {
     "code": "SCANDI",
@@ -86,8 +158,16 @@
     "title": "Scandinavian Minimalist Abstract Composition",
     "artist": "Hilma af Klint (1915)",
     "desc": "Pioneering Nordic abstract composition with soothing earth tones and organic minimalist geometry.",
-    "tags": ["Abstract", "Scandi", "Minimalist"],
-    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/22/6_hilma_af_klint%2C_the_swan_no_16%2C_1915.jpg"
+    "tags": [
+      "Abstract",
+      "Scandi",
+      "Minimalist"
+    ],
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/22/6_hilma_af_klint%2C_the_swan_no_16%2C_1915.jpg",
+    "status": "active",
+    "edition_limit": 150,
+    "sales_count": 31,
+    "vaulted_at": null
   },
   {
     "code": "STENCIL",
@@ -95,8 +175,18 @@
     "title": "Urban Stencil Edition - Bloom Where You Are Planted",
     "artist": "Contemporary British Street Art",
     "desc": "Striking London-style urban stencil print in high-contrast monochrome with vivid red botanical accent on textured brickwork. Printed on 200gsm archival matte paper in the UK.",
-    "tags": ["Street Art", "Urban Stencil", "Banksy Style", "Contemporary", "Wall Art UK"],
-    "image_url": "https://heritage-fine-art-uk.onrender.com/artworks/banksy-stencil-bloom-art-print.jpg"
+    "tags": [
+      "Street Art",
+      "Urban Stencil",
+      "Banksy Style",
+      "Contemporary",
+      "Wall Art UK"
+    ],
+    "image_url": "https://heritage-fine-art-uk.onrender.com/artworks/banksy-stencil-bloom-art-print.jpg",
+    "status": "active",
+    "edition_limit": 200,
+    "sales_count": 16,
+    "vaulted_at": null
   },
   {
     "code": "MICALLEF",
@@ -104,7 +194,37 @@
     "title": "Contemporary Figurative Expressionism - Emotive Impasto Portrait",
     "artist": "British Neo-Expressionism Atelier",
     "desc": "Visceral modern British figurative portrait featuring sculptural impasto oil textures, dripping pigments, and vivid neon spray accents. Printed on 200gsm museum archival art paper.",
-    "tags": ["Expressionism", "Micallef Style", "Contemporary Portrait", "Modern Fine Art", "Oil Impasto"],
-    "image_url": "https://heritage-fine-art-uk.onrender.com/artworks/antony-micallef-expressive-portrait.jpg"
+    "tags": [
+      "Expressionism",
+      "Micallef Style",
+      "Contemporary Portrait",
+      "Modern Fine Art",
+      "Oil Impasto"
+    ],
+    "image_url": "https://heritage-fine-art-uk.onrender.com/artworks/antony-micallef-expressive-portrait.jpg",
+    "status": "active",
+    "edition_limit": 250,
+    "sales_count": 10,
+    "vaulted_at": null
+  },
+  {
+    "code": "BRUTALIST",
+    "handle": "bauhaus-neo-brutalist-architectural-typography",
+    "title": "Bauhaus Neo-Brutalist Architectural Typography",
+    "artist": "Modernist Atelier London",
+    "desc": "Bold modernist exhibition piece featuring geometric architectural forms, structured grid typography, and warm Swiss raw-umber tones.",
+    "tags": [
+      "Bauhaus",
+      "Modernist",
+      "Architecture",
+      "Typography",
+      "Wall Art UK"
+    ],
+    "status": "active",
+    "edition_limit": 150,
+    "sales_count": 0,
+    "created_at": "2026-09-12T22:16:52.773Z",
+    "vaulted_at": null,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/D%C3%B6rte_Helm_-_Bauhaus_Exhibition_Postcard_No._14.jpg"
   }
 ]

@@ -278,6 +278,35 @@
       transform: scale(1.03);
     }
 
+    .edition-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      z-index: 2;
+    }
+
+    .vault-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #2b2927;
+      color: #dfd7cc;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      z-index: 2;
+    }
+
     .art-body {
       padding: 20px;
       display: flex;
@@ -696,6 +725,17 @@
     <!-- Rendered dynamically from /api/products -->
   </main>
 
+  <!-- The Collector's Vault (Archived Editions) -->
+  <div class="section-title" id="vaultHeader" style="margin-top: 60px; display: none;">
+    <span class="hero-badge" style="background:#2b2927; color:#dfd7cc; padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em;">The Archive</span>
+    <h3 style="margin-top: 12px;">The Collector's Vault</h3>
+    <p>Previous limited editions that have completed their numbered print runs and are permanently closed from new production.</p>
+  </div>
+
+  <main class="gallery" id="vaultGrid" style="display: none; opacity: 0.85;">
+    <!-- Rendered dynamically if any vaulted prints exist -->
+  </main>
+
   <!-- Quality Specifications -->
   <section id="specifications" style="background:#ffffff; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:70px 24px;">
     <div style="max-width:1100px; margin:0 auto; text-align:center;">
@@ -889,14 +929,20 @@
       });
     }
 
+    let productsList = [];
+    let vaultedList = [];
+    let sizesList = [];
+
     // Load products and sizes from /api/products
     async function initStore() {
       try {
         const res = await fetch('/api/products');
         const data = await res.json();
         productsList = data.products || [];
+        vaultedList = data.vaulted || [];
         sizesList = data.sizes || [];
         renderGallery();
+        renderVault();
       } catch (e) {
         console.error("Failed to load catalog:", e);
       }
@@ -907,6 +953,7 @@
       grid.innerHTML = productsList.map(p => `
         <article class="art-card">
           <div class="art-img-wrap">
+            <span class="edition-badge">Limited Edition • ${p.edition_limit || 150} Prints</span>
             <img src="${p.image_url}" alt="${p.title}" class="art-img" loading="lazy" width="400" height="380">
           </div>
           <div class="art-body">
@@ -916,6 +963,35 @@
             <div class="art-footer">
               <div class="art-price">from £18.99 <span>/ Free UK Delivery</span></div>
               <button class="btn-select" onclick="openOrderModal('${p.code}')">Order Print</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function renderVault() {
+      const header = document.getElementById('vaultHeader');
+      const grid = document.getElementById('vaultGrid');
+      if (!vaultedList || vaultedList.length === 0) {
+        header.style.display = 'none';
+        grid.style.display = 'none';
+        return;
+      }
+      header.style.display = 'block';
+      grid.style.display = 'grid';
+      grid.innerHTML = vaultedList.map(p => `
+        <article class="art-card" style="border-color: #dcd7ce; background: #faf8f5;">
+          <div class="art-img-wrap">
+            <span class="vault-badge">🔒 Edition Closed</span>
+            <img src="${p.image_url}" alt="${p.title}" class="art-img" loading="lazy" width="400" height="380" style="filter: grayscale(20%);">
+          </div>
+          <div class="art-body">
+            <span class="art-artist">${p.artist || 'Vault Archive'}</span>
+            <h4 class="art-title">${p.title}</h4>
+            <p class="art-desc">${p.desc}</p>
+            <div class="art-footer">
+              <div class="art-price" style="color:var(--text-muted); font-size:0.88rem;">Vaulted Archive Edition</div>
+              <button class="btn-select" style="background:#4a4744; cursor:not-allowed;" disabled>Closed</button>
             </div>
           </div>
         </article>

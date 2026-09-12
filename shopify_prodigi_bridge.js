@@ -43,6 +43,7 @@ const SKU_MAPPING = {
 
 // High-resolution public domain artwork asset registry
 const ARTWORK_REGISTRY = {
+  BRUTALIST: "https://upload.wikimedia.org/wikipedia/commons/a/a0/D%C3%B6rte_Helm_-_Bauhaus_Exhibition_Postcard_No._14.jpg",
   MORRIS: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Morris_Strawberry_Thief_1883.jpg",
   HOKUSAI: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Great_Wave_off_Kanagawa2.jpg",
   REDOUTE: "https://upload.wikimedia.org/wikipedia/commons/9/94/Carnations_redoute.JPG",
@@ -147,7 +148,8 @@ app.get("/feeds/google-shopping.xml", (req, res) => {
   const baseUrl = (process.env.APP_BASE_URL || `https://${req.headers.host || "heritage-fine-art-uk.onrender.com"}`).replace(/\/$/, "");
 
   let itemsXml = "";
-  for (const product of products) {
+  const activeProducts = products.filter((p) => p.status !== "vaulted");
+  for (const product of activeProducts) {
     for (const size of sizes) {
       const priceGbp = (size.pricePence / 100).toFixed(2);
       const productLink = `${baseUrl}/product/${product.handle}?size=${size.id}`;
@@ -296,7 +298,8 @@ app.get("/feeds/pinterest.xml", (req, res) => {
   const baseUrl = (process.env.APP_BASE_URL || `https://${req.headers.host || "heritage-fine-art-uk.onrender.com"}`).replace(/\/$/, "");
 
   let itemsXml = "";
-  for (const product of products) {
+  const activeProducts = products.filter((p) => p.status !== "vaulted");
+  for (const product of activeProducts) {
     const link = `${baseUrl}/product/${product.handle}?utm_source=pinterest&amp;utm_medium=organic_rss`;
     const titleEscaped = escapeXml(`${product.title} — Archival Fine Art Print`);
     const descEscaped = escapeXml(`Bring museum elegance to your home with ${product.title} (${product.artist}). Handcrafted in Alton, Hampshire on 200gsm archival matte paper with genuine 12-colour giclée inks. Includes Free Royal Mail 48 Tracked UK delivery. Use code HERITAGE10 for 10% off your order.`);
@@ -331,7 +334,8 @@ ${itemsXml}
 app.get("/feeds/social.json", (req, res) => {
   const baseUrl = (process.env.APP_BASE_URL || `https://${req.headers.host || "heritage-fine-art-uk.onrender.com"}`).replace(/\/$/, "");
   
-  const posts = products.map((product) => {
+  const activeProducts = products.filter((p) => p.status !== "vaulted");
+  const posts = activeProducts.map((product) => {
     return {
       title: product.title,
       artist: product.artist,
@@ -646,7 +650,11 @@ app.get("/product/:slug", (req, res) => {
       <h1>${escapeXml(product.title)}</h1>
       <p class="desc">${escapeXml(product.desc)}</p>
 
-      <div class="pricing-box">
+        ${product.status === "vaulted" ? `
+          <div style="background:#2b2927; color:#dfd7cc; padding:8px 16px; border-radius:4px; font-weight:700; font-size:0.85rem; letter-spacing:0.05em; margin-bottom:12px; display:inline-block;">🔒 THE COLLECTOR'S VAULT • EDITION PERMANENTLY CLOSED</div>
+        ` : `
+          <div style="background:#eaf2ec; color:#1e3a2b; padding:4px 10px; border-radius:4px; font-weight:600; font-size:0.82rem; margin-bottom:12px; display:inline-block;">✓ Limited Edition • Hand-Numbered Run of ${product.edition_limit || 150} Prints</div>
+        `}
         <div style="font-weight: 600; margin-bottom: 0.75rem; font-size: 0.95rem;">Select Museum Size Edition:</div>
         ${sizes.map((s) => `
           <label class="size-option ${s.id === preselectedSize ? "active" : ""}" onclick="selectSize('${s.id}', ${s.pricePence})">
@@ -670,9 +678,15 @@ app.get("/product/:slug", (req, res) => {
           <div id="promo-feedback" class="promo-feedback"></div>
         </div>
 
-        <button type="button" id="buy-button" class="btn-buy" onclick="checkout()">
-          Order Print Now — Free UK Delivery
-        </button>
+        ${product.status === "vaulted" ? `
+          <a href="/#gallery" class="btn-buy" style="background:#4a4744; text-decoration:none; text-align:center;">
+            Edition Closed &amp; Vaulted — Browse Active Editions
+          </a>
+        ` : `
+          <button type="button" id="buy-button" class="btn-buy" onclick="checkout()">
+            Order Print Now — Free UK Delivery
+          </button>
+        `}
         <div class="guarantee-note">🔒 Encrypted Stripe Checkout • Dispatched in heavy-duty postal tube via Royal Mail 48</div>
       </div>
 
@@ -770,7 +784,9 @@ app.get("/product/:slug", (req, res) => {
  * 0. GET CATALOG PRODUCTS & SIZES (For Storefront Frontend)
  */
 app.get("/api/products", (req, res) => {
-  res.status(200).json({ products, sizes });
+  const active = products.filter((p) => p.status !== "vaulted");
+  const vaulted = products.filter((p) => p.status === "vaulted");
+  res.status(200).json({ products: active, vaulted, sizes });
 });
 
 
@@ -785,6 +801,10 @@ app.post("/api/create-checkout-session", async (req, res) => {
 
     if (!product || !size) {
       return res.status(400).json({ error: "Invalid product or size selection." });
+    }
+
+    if (product.status === "vaulted") {
+      return res.status(400).json({ error: "This limited edition has been vaulted and is no longer available for new production." });
     }
 
     if (!stripe) {

@@ -1,0 +1,44 @@
+name: Autonomous Monthly Art Curator & Scarcity Vault
+
+on:
+  schedule:
+    # Runs at 00:00 UTC on the 1st of every month
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+    # Allows manual trigger anytime from GitHub Actions tab
+
+jobs:
+  curate-and-vault:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Run Autonomous Art Curator Cycle
+        run: node art_curator_bot.js
+
+      - name: Run Test Suite
+        run: npm test
+
+      - name: Commit and Push New Drop & Vaulted Editions
+        run: |
+          git config --global user.name "CuratorBot[bot]"
+          git config --global user.email "curator-bot@heritagefineart.co.uk"
+          git add products.json shopify_prodigi_bridge.js public/artworks/
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Curator Bot: Autonomous monthly art drop & vaulting cycle"
+            git push origin master
+          fi
