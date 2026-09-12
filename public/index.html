@@ -907,6 +907,7 @@
 
   <script>
     let productsList = [];
+    let vaultedList = [];
     let sizesList = [];
     let selectedArtwork = null;
     let selectedSize = null;
@@ -928,10 +929,6 @@
         });
       });
     }
-
-    let productsList = [];
-    let vaultedList = [];
-    let sizesList = [];
 
     // Load products and sizes from /api/products
     async function initStore() {
