@@ -1,0 +1,28 @@
+name: Autonomous Marketing & Search Engine Bot
+
+on:
+  schedule:
+    # Runs twice daily (08:00 and 18:00 UTC)
+    - cron: '0 8,18 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-marketing-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm ci || npm install
+
+      - name: Execute Autonomous Marketing & Search Engine Pings
+        env:
+          APP_BASE_URL: 'https://heritage-fine-art-uk.onrender.com'
+        run: node marketing_bot.js

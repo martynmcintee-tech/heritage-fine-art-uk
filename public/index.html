@@ -781,6 +781,15 @@
         <!-- Rendered dynamically from /api/products sizes -->
       </div>
 
+      <div style="margin: 12px 0 16px;">
+        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 500;">Promotional Code:</div>
+        <div style="display: flex; gap: 6px;">
+          <input type="text" id="modalPromoInput" placeholder="e.g. HERITAGE10" value="HERITAGE10" style="flex: 1; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius); text-transform: uppercase; font-size: 0.88rem;">
+          <button type="button" onclick="applyModalPromo()" style="padding: 8px 14px; background: var(--accent); color: #ffffff; border: none; border-radius: var(--radius); font-size: 0.85rem; font-weight: 600; cursor: pointer;">Apply</button>
+        </div>
+        <div id="modalPromoFeedback" style="font-size: 0.78rem; color: #1b7430; margin-top: 4px; font-weight: 500;">✓ HERITAGE10 applied (10% discount)</div>
+      </div>
+
       <button id="btnPay" class="checkout-btn" onclick="triggerStripeCheckout()">
         <span id="btnPayText">Pay with Card / Apple Pay — £24.99</span>
       </button>
@@ -804,6 +813,24 @@
     </div>
   </dialog>
 
+  <!-- Exit-Intent Promotion Modal -->
+  <dialog id="exitPromoModal" closedby="any">
+    <div class="modal-content" style="text-align: center; max-width: 460px; padding: 28px 24px;">
+      <div style="font-size: 2.2rem; margin-bottom: 8px;">🏛️</div>
+      <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--text); margin-bottom: 8px;">Enjoy 10% Off Your Curated Edition</h3>
+      <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; margin-bottom: 16px;">
+        Every print is produced to order on 200gsm archival matte paper at our Alton, Hampshire workshop with Free Royal Mail 48 Tracked UK delivery.
+      </p>
+      <div style="background: #f4efe6; border: 1px dashed var(--gold); padding: 10px; border-radius: var(--radius); font-size: 1.15rem; font-weight: 700; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 18px;">
+        HERITAGE10
+      </div>
+      <button class="btn-cta" style="width: 100%; padding: 14px; font-size: 0.98rem;" onclick="claimExitPromo()">Claim 10% Discount & View Editions</button>
+      <div style="margin-top: 10px; font-size: 0.8rem; color: var(--text-muted);">
+        <a onclick="document.getElementById('exitPromoModal').close()" style="cursor: pointer; text-decoration: underline;">No thank you, continue browsing</a>
+      </div>
+    </div>
+  </dialog>
+
   <!-- Footer -->
   <footer>
     <div class="footer-container">
@@ -818,6 +845,8 @@
           <li><a href="#gallery">Collection</a></li>
           <li><a href="#specifications">Specifications</a></li>
           <li><a href="#faq">Delivery FAQ</a></li>
+          <li><a href="/sitemap.xml" target="_blank">Sitemap (XML)</a></li>
+          <li><a href="/feeds/google-shopping.xml" target="_blank">Google Shopping Feed</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -931,10 +960,37 @@
       updatePayButton();
     }
 
+    let promoActive = true; // Defaults active with HERITAGE10
+
+    function applyModalPromo() {
+      const input = document.getElementById('modalPromoInput');
+      const feedback = document.getElementById('modalPromoFeedback');
+      const code = (input.value || '').trim().toUpperCase();
+
+      if (code === 'HERITAGE10') {
+        promoActive = true;
+        feedback.style.display = 'block';
+        feedback.style.color = '#1b7430';
+        feedback.textContent = '✓ HERITAGE10 applied: 10% discount included!';
+      } else if (code === '') {
+        promoActive = false;
+        feedback.style.display = 'none';
+      } else {
+        promoActive = false;
+        feedback.style.display = 'block';
+        feedback.style.color = '#b3261e';
+        feedback.textContent = 'Invalid promo code.';
+      }
+      updatePayButton();
+    }
+
     function updatePayButton() {
       const btn = document.getElementById('btnPayText');
       if (selectedSize) {
-        btn.textContent = `Pay with Card / Apple Pay — ${selectedSize.priceFormatted}`;
+        let price = selectedSize.pricePence;
+        if (promoActive) price = Math.round(price * 0.9);
+        const formatted = '£' + (price / 100).toFixed(2);
+        btn.textContent = `Pay with Card / Apple Pay — ${formatted}` + (promoActive ? ' (10% OFF)' : '');
       }
     }
 
@@ -942,6 +998,7 @@
       const btn = document.getElementById('btnPay');
       btn.disabled = true;
       btn.innerHTML = 'Connecting to Secure Checkout...';
+      const promoCode = document.getElementById('modalPromoInput').value.trim().toUpperCase();
 
       try {
         const res = await fetch('/api/create-checkout-session', {
@@ -949,7 +1006,8 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             artworkCode: selectedArtwork.code,
-            sizeId: selectedSize.id
+            sizeId: selectedSize.id,
+            promoCode: promoCode
           })
         });
 
@@ -967,6 +1025,37 @@
         updatePayButton();
       }
     }
+
+    // Exit-Intent & Cart Recovery Trigger
+    let exitPromoShown = false;
+    const exitModal = document.getElementById('exitPromoModal');
+
+    function checkExitIntent(e) {
+      if (exitPromoShown) return;
+      if (e.clientY <= 15) {
+        showExitPromo();
+      }
+    }
+
+    function showExitPromo() {
+      if (exitPromoShown) return;
+      exitPromoShown = true;
+      if (exitModal && typeof exitModal.showModal === 'function') {
+        exitModal.showModal();
+      }
+    }
+
+    function claimExitPromo() {
+      if (exitModal) exitModal.close();
+      const gallery = document.getElementById('gallery');
+      if (gallery) {
+        gallery.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    document.addEventListener('mouseleave', checkExitIntent);
+    // Show after 30 seconds of browsing if still on site
+    setTimeout(showExitPromo, 30000);
 
     const POLICIES = {
       shipping: `

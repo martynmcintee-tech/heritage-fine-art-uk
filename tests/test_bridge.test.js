@@ -176,3 +176,81 @@ test("Stripe Checkout Session Request Validation", async (t) => {
   }
 });
 
+test("Google Shopping Free XML Feed Endpoint", async (t) => {
+  const server = http.createServer(app);
+  await new Promise((resolve) => server.listen(0, resolve));
+  const port = server.address().port;
+
+  try {
+    const res = await fetch(`http://127.0.0.1:${port}/feeds/google-shopping.xml`);
+    assert.strictEqual(res.status, 200);
+    assert.ok(res.headers.get("content-type").includes("xml"));
+    const text = await res.text();
+    assert.ok(text.includes("<rss version=\"2.0\" xmlns:g=\"http://base.google.com/ns/1.0\">"));
+    assert.ok(text.includes("<g:brand>Heritage Fine Art UK</g:brand>"));
+    assert.ok(text.includes("<g:price>18.99 GBP</g:price>"));
+    assert.ok(text.includes("<g:service>Royal Mail 48 Tracked</g:service>"));
+    assert.ok(text.includes("<g:shipping>"));
+  } finally {
+    server.close();
+  }
+});
+
+test("Sitemap and Robots Endpoints", async (t) => {
+  const server = http.createServer(app);
+  await new Promise((resolve) => server.listen(0, resolve));
+  const port = server.address().port;
+
+  try {
+    const sitemapRes = await fetch(`http://127.0.0.1:${port}/sitemap.xml`);
+    assert.strictEqual(sitemapRes.status, 200);
+    const sitemapText = await sitemapRes.text();
+    assert.ok(sitemapText.includes("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">"));
+    assert.ok(sitemapText.includes("/product/vintage-william-morris-strawberry-thief-botanical-print"));
+
+    const robotsRes = await fetch(`http://127.0.0.1:${port}/robots.txt`);
+    assert.strictEqual(robotsRes.status, 200);
+    const robotsText = await robotsRes.text();
+    assert.ok(robotsText.includes("Sitemap:"));
+  } finally {
+    server.close();
+  }
+});
+
+test("Programmatic SEO Product Landing Page", async (t) => {
+  const server = http.createServer(app);
+  await new Promise((resolve) => server.listen(0, resolve));
+  const port = server.address().port;
+
+  try {
+    const res = await fetch(`http://127.0.0.1:${port}/product/vintage-william-morris-strawberry-thief-botanical-print`);
+    assert.strictEqual(res.status, 200);
+    const html = await res.text();
+    assert.ok(html.includes("William Morris - Strawberry Thief Fine Art Print"));
+    assert.ok(html.includes("application/ld+json"));
+    assert.ok(html.includes("Heritage Fine Art UK"));
+    assert.ok(html.includes("HERITAGE10"));
+  } finally {
+    server.close();
+  }
+});
+
+test("Social Syndication Feed Endpoint", async (t) => {
+  const server = http.createServer(app);
+  await new Promise((resolve) => server.listen(0, resolve));
+  const port = server.address().port;
+
+  try {
+    const res = await fetch(`http://127.0.0.1:${port}/feeds/social.json`);
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.strictEqual(data.itemsCount, 10);
+    assert.ok(data.posts[0].pinterestPin);
+    assert.ok(data.posts[0].socialPost.x_twitter);
+    assert.ok(data.posts[0].socialPost.instagram_caption);
+  } finally {
+    server.close();
+  }
+});
+
+
