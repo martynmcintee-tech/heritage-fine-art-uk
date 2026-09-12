@@ -216,12 +216,13 @@ app.post("/webhooks/stripe", async (req, res) => {
     const sig = req.headers["stripe-signature"];
     let event;
 
-    if (process.env.STRIPE_WEBHOOK_SECRET && !process.env.STRIPE_WEBHOOK_SECRET.startsWith("whsec_xxxx")) {
+    const stripeWebhookSecret = (process.env.STRIPE_WEBHOOK_SECRET || "").trim();
+    if (stripeWebhookSecret && !stripeWebhookSecret.startsWith("whsec_xxxx")) {
       try {
         event = stripe.webhooks.constructEvent(
           req.rawBody,
           sig,
-          process.env.STRIPE_WEBHOOK_SECRET
+          stripeWebhookSecret
         );
       } catch (err) {
         console.error("[STRIPE SIGNATURE ERROR]:", err.message);
