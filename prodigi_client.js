@@ -61,14 +61,14 @@ class ProdigiClient {
     };
 
     try {
-      const response = await axios.post(${this.baseUrl}/orders, payload, {
+      const response = await axios.post(`${this.baseUrl}/orders`, payload, {
         headers: this.getHeaders(),
       });
       return response.data;
     } catch (error) {
       const errorDetails = error.response ? error.response.data : error.message;
       console.error("Prodigi Order Creation Error:", JSON.stringify(errorDetails, null, 2));
-      throw new Error(Failed to create Prodigi order: );
+      throw new Error(`Failed to create Prodigi order: ${error.message}`);
     }
   }
 
@@ -77,12 +77,12 @@ class ProdigiClient {
    */
   async getOrder(orderId) {
     try {
-      const response = await axios.get(${this.baseUrl}/orders/, {
+      const response = await axios.get(`${this.baseUrl}/orders/${orderId}`, {
         headers: this.getHeaders(),
       });
       return response.data;
     } catch (error) {
-      console.error(Error fetching Prodigi order :, error.message);
+      console.error(`Error fetching Prodigi order ${orderId}:`, error.message);
       throw error;
     }
   }

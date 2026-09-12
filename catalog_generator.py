@@ -3,64 +3,84 @@ import csv
 # High-converting public domain collection titles (British Library, Rijksmuseum, Met Open Access)
 PRODUCTS = [
     {
+        "code": "MORRIS",
         "handle": "vintage-william-morris-strawberry-thief-botanical-print",
         "title": "William Morris - Strawberry Thief Fine Art Print",
         "desc": "Museum-grade giclée print of William Morris' iconic Victorian textile illustration. Printed on 200gsm archival matte paper in the UK.",
-        "tags": "Botanical, Victorian, William Morris, Wall Art, British Heritage"
+        "tags": "Botanical, Victorian, William Morris, Wall Art, British Heritage",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Morris_Strawberry_Thief_1883.jpg"
     },
     {
+        "code": "HOKUSAI",
         "handle": "hokusai-great-wave-kanagawa-fine-art-print",
         "title": "Katsushika Hokusai - The Great Wave off Kanagawa",
         "desc": "Classic Japanese ukiyo-e woodblock masterpiece reproduced with archival giclée pigments on heavy matte art paper. UK printed and dispatched.",
-        "tags": "Japanese Art, Woodblock, Classic Art, Ocean, Wave"
+        "tags": "Japanese Art, Woodblock, Classic Art, Ocean, Wave",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Great_Wave_off_Kanagawa2.jpg"
     },
     {
+        "code": "REDOUTE",
         "handle": "vintage-camellia-japonica-botanical-print",
         "title": "Pierre-Joseph Redouté - Camellia Japonica Botanical Illustration",
         "desc": "Botanical court painter Redouté's delicate French study of flowering camellia blooms. Premium heavyweight fine art paper.",
-        "tags": "Botanical, Floral, French Art, Vintage, Redoute"
+        "tags": "Botanical, Floral, French Art, Vintage, Redoute",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/94/Carnations_redoute.JPG"
     },
     {
+        "code": "BAUHAUS",
         "handle": "bauhaus-exhibition-1923-typography-art-print",
         "title": "Bauhaus Exhibition Weimar 1923 Geometric Print",
         "desc": "Iconic German modernist exhibition poster featuring striking geometric typography and primary color blocking.",
-        "tags": "Bauhaus, Modernist, Graphic Design, Typography, Minimalist"
+        "tags": "Bauhaus, Modernist, Graphic Design, Typography, Minimalist",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/D%C3%B6rte_Helm_-_Bauhaus_Exhibition_Postcard_No._14.jpg"
     },
     {
+        "code": "TUBE",
         "handle": "vintage-london-underground-retro-travel-poster",
         "title": "Vintage London Underground Royal Botanic Gardens Poster",
         "desc": "Classic 1930s British transport poster celebrating Kew Gardens. Vibrant vintage lithograph reproduction.",
-        "tags": "London, Retro Travel, British Rail, Kew Gardens, Vintage Poster"
+        "tags": "London, Retro Travel, British Rail, Kew Gardens, Vintage Poster",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Brightest_London_is_best_reached_by_Underground%2C_subway_poster%2C_1924.jpg"
     },
     {
+        "code": "VANGOGH",
         "handle": "van-gogh-almond-blossom-giclee-print",
         "title": "Vincent van Gogh - Almond Blossom Masterpiece",
         "desc": "Poetic post-impressionist floral branches against turquoise skies. Printed using genuine archival inks.",
-        "tags": "Van Gogh, Impressionism, Floral, Classic Masterpiece"
+        "tags": "Van Gogh, Impressionism, Floral, Classic Masterpiece",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/68/Vincent_van_Gogh_-_Almond_blossom_-_Google_Art_Project.jpg"
     },
     {
+        "code": "MONET",
         "handle": "claude-monet-water-lilies-giverny-art-print",
         "title": "Claude Monet - The Water Lily Pond (Giverny)",
         "desc": "Serene French impressionist landscape featuring the famous Japanese bridge and blooming water lilies.",
-        "tags": "Monet, French Art, Water Lilies, Impressionism"
+        "tags": "Monet, French Art, Water Lilies, Impressionism",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/50/Claude_Monet_044.jpg"
     },
     {
+        "code": "HERBAL",
         "handle": "vintage-herbal-medicinal-plants-chart",
         "title": "Victorian Apothecary & Medicinal Plants Chart",
         "desc": "Detailed vintage botanical chart illustrating classic British medicinal flora, wildflowers, and herbs.",
-        "tags": "Botanical, Wildflowers, Apothecary, Vintage Chart"
+        "tags": "Botanical, Wildflowers, Apothecary, Vintage Chart",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Quillaja_saponaria_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-119.jpg"
     },
     {
+        "code": "KLIMT",
         "handle": "gustav-klimt-the-kiss-art-print",
         "title": "Gustav Klimt - The Kiss (Der Kuss)",
         "desc": "Vienna Secession gilded masterpiece depicting romantic intimacy in rich decorative symbolism.",
-        "tags": "Klimt, Vienna Secession, Gold Leaf, Romantic"
+        "tags": "Klimt, Vienna Secession, Gold Leaf, Romantic",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Gustav_Klimt_016.jpg"
     },
     {
+        "code": "SCANDI",
         "handle": "mid-century-abstract-scandinavian-shapes-print",
         "title": "Scandinavian Minimalist Neutral Abstract Composition",
         "desc": "Soothing neutral beige, charcoal, and terracotta organic shapes tailored for modern Scandi interior decor.",
-        "tags": "Abstract, Scandi, Minimalist, Earth Tones, Neutral"
+        "tags": "Abstract, Scandi, Minimalist, Earth Tones, Neutral",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/22/6_hilma_af_klint%2C_the_swan_no_16%2C_1915.jpg"
     }
 ]
 
@@ -76,7 +96,7 @@ fieldnames = [
     "Handle", "Title", "Body (HTML)", "Vendor", "Product Category", "Type", "Tags", "Published",
     "Option1 Name", "Option1 Value", "Variant SKU", "Variant Grams", "Variant Inventory Tracker",
     "Variant Inventory Qty", "Variant Inventory Policy", "Variant Fulfillment Service", "Variant Price",
-    "Variant Requires Shipping", "Variant Taxable", "Status"
+    "Variant Requires Shipping", "Variant Taxable", "Image Src", "Image Position", "Image Alt Text", "Status"
 ]
 
 with open(csv_file, mode="w", newline="", encoding="utf-8") as f:
@@ -97,7 +117,7 @@ with open(csv_file, mode="w", newline="", encoding="utf-8") as f:
                 "Published": "TRUE",
                 "Option1 Name": "Size",
                 "Option1 Value": v["size"],
-                "Variant SKU": v["sku_suffix"],
+                "Variant SKU": f"{p['code']}-{v['sku_suffix']}",
                 "Variant Grams": v["grams"],
                 "Variant Inventory Tracker": "",
                 "Variant Inventory Qty": "999",
@@ -106,6 +126,9 @@ with open(csv_file, mode="w", newline="", encoding="utf-8") as f:
                 "Variant Price": v["price"],
                 "Variant Requires Shipping": "TRUE",
                 "Variant Taxable": "TRUE",
+                "Image Src": p["image_url"] if first else "",
+                "Image Position": "1" if first else "",
+                "Image Alt Text": p["title"] if first else "",
                 "Status": "active"
             })
             first = False

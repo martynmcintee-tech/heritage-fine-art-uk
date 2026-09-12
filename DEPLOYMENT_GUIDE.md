@@ -43,7 +43,44 @@ Follow this step-by-step master checklist to get your store live and running com
 
 ---
 
-## Step 4: Autonomous AI Customer Support (15 Mins)
+---
+
+## Step 4: Deploy the Automation Bridge (5 Mins)
+You can deploy this lightweight Node bridge to **Railway**, **Render**, or any Docker host with zero configuration.
+
+### Option A: Deploy with Railway / Render (Recommended)
+1. Push this repository to GitHub.
+2. In [Railway.app](https://railway.app) or [Render.com](https://render.com), click **New Project > Deploy from GitHub repo**.
+3. Railway/Render will automatically detect the [Procfile](file:///i:/Development%20Projects/Dropshipping%20Projects/uk-fine-art-zero-touch/Procfile) and [Dockerfile](file:///i:/Development%20Projects/Dropshipping%20Projects/uk-fine-art-zero-touch/Dockerfile).
+4. Add your Environment Variables in the service settings (see `.env.example`).
+5. Your public service URL will look like: `https://your-bridge-app.up.railway.app`.
+
+### Option B: Local / Docker Deployment
+```bash
+# Test the full simulation locally anytime
+npm test
+npm run simulate
+
+# Build and run Docker container
+docker build -t uk-dropship-bridge .
+docker run -p 3000:3000 --env-file .env uk-dropship-bridge
+```
+
+---
+
+## Step 5: Webhook Configuration in Shopify & Prodigi
+1. **Shopify Admin > Settings > Notifications > Webhooks**:
+   - Event: `Order creation` or `Order payment` (`orders/paid`)
+   - Format: `JSON`
+   - URL: `https://your-bridge-app.up.railway.app/webhooks/shopify/orders-paid`
+   - Note the **Webhook signing secret** at the bottom of the page and paste it into `SHOPIFY_WEBHOOK_SECRET` in `.env`.
+2. **Prodigi Dashboard > Settings > Webhooks**:
+   - URL: `https://your-bridge-app.up.railway.app/webhooks/prodigi/dispatch`
+   - Events: `order.status.stage.changed` (dispatches Royal Mail tracking straight to Shopify).
+
+---
+
+## Step 6: Autonomous AI Customer Support (15 Mins)
 1. Install **Tidio** from the Shopify App Store.
 2. In Tidio, activate **Lyro AI**.
 3. Go to **Lyro Knowledge Base > Add Knowledge**:
@@ -53,20 +90,32 @@ Follow this step-by-step master checklist to get your store live and running com
 
 ---
 
-## Step 5: Self-Service Returnless Refunds (10 Mins)
+## Step 7: Self-Service Returnless Refunds (10 Mins)
 1. Install **AfterShip Returns** (or **Loop Returns**) from the Shopify App Store.
 2. Set up Return Policy Rule:
    - If reason is "Damaged in transit" and photo is provided -> **Auto-approve replacement / refund without requiring return shipment**.
 
 ---
 
-## Step 6: Automated Performance Marketing (Hands-Off Traffic)
+## Step 8: Automated Performance Marketing (Hands-Off Traffic)
 1. Install the **Google & YouTube** app in Shopify.
 2. Sync your product catalog with **Google Merchant Center**.
 3. Launch a **Google Performance Max (PMax)** campaign:
    - Target: United Kingdom
    - Bidding Strategy: Maximize Conversion Value with Target ROAS (e.g., 250% - 300%).
    - Budget: Start at £10 - £15/day. Google’s machine learning algorithm handles bidding, placement (Shopping, Search, Display, YouTube), and optimization automatically.
+
+---
+
+## Credential Quick Reference (Fill once received)
+| Environment Variable | Where to find it | Purpose |
+| :--- | :--- | :--- |
+| `PRODIGI_API_KEY` | Prodigi Dashboard > Settings > API Keys | Order placement & print authorization |
+| `PRODIGI_ENVIRONMENT` | Set to `sandbox` (testing) or `live` (production) | Selects Prodigi API gateway |
+| `SHOPIFY_STORE_DOMAIN` | Shopify Admin URL (`your-store.myshopify.com`) | Target for fulfillment postback |
+| `SHOPIFY_ADMIN_ACCESS_TOKEN` | Shopify Admin > Apps > App development > Admin API token | Writes tracking numbers to Shopify |
+| `SHOPIFY_WEBHOOK_SECRET` | Shopify Admin > Settings > Notifications > Webhooks | Verifies webhook HMAC-SHA256 signature |
+| `RETURNLESS_REFUND_SECRET` | Any secure random string you choose | Authenticates auto-reprint API calls |
 
 ---
 

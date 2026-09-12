@@ -1,10 +1,19 @@
 require("dotenv").config();
+const crypto = require("crypto");
 const express = require("express");
 const axios = require("axios");
 const ProdigiClient = require("./prodigi_client");
 
 const app = express();
-app.use(express.json());
+
+// Preserve raw body buffer for Shopify HMAC SHA256 validation
+app.use(
+  express.json({
+    verify: (req, res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
 
 const prodigi = new ProdigiClient(
   process.env.PRODIGI_API_KEY,
@@ -19,12 +28,98 @@ const SKU_MAPPING = {
   "A1-MATTE": "GLOBAL-FAP-A1",
 };
 
+// High-resolution public domain artwork asset registry
+const ARTWORK_REGISTRY = {
+  MORRIS: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Morris_Strawberry_Thief_1883.jpg",
+  HOKUSAI: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Great_Wave_off_Kanagawa2.jpg",
+  REDOUTE: "https://upload.wikimedia.org/wikipedia/commons/9/94/Carnations_redoute.JPG",
+  BAUHAUS: "https://upload.wikimedia.org/wikipedia/commons/a/a0/D%C3%B6rte_Helm_-_Bauhaus_Exhibition_Postcard_No._14.jpg",
+  TUBE: "https://upload.wikimedia.org/wikipedia/commons/e/eb/Brightest_London_is_best_reached_by_Underground%2C_subway_poster%2C_1924.jpg",
+  VANGOGH: "https://upload.wikimedia.org/wikipedia/commons/6/68/Vincent_van_Gogh_-_Almond_blossom_-_Google_Art_Project.jpg",
+  MONET: "https://upload.wikimedia.org/wikipedia/commons/5/50/Claude_Monet_044.jpg",
+  HERBAL: "https://upload.wikimedia.org/wikipedia/commons/8/83/Quillaja_saponaria_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-119.jpg",
+  KLIMT: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Gustav_Klimt_016.jpg",
+  SCANDI: "https://upload.wikimedia.org/wikipedia/commons/2/22/6_hilma_af_klint%2C_the_swan_no_16%2C_1915.jpg",
+};
+
+/**
+ * Resolve Prodigi product SKU from Shopify SKU (handles prefix SKUs like MORRIS-A3-MATTE)
+ */
+function resolveProdigiSku(sku) {
+  if (!sku) return "GLOBAL-FAP-A3";
+  if (SKU_MAPPING[sku]) return SKU_MAPPING[sku];
+  if (sku.endsWith("A4-MATTE") || sku.includes("A4")) return "GLOBAL-FAP-A4";
+  if (sku.endsWith("A3-MATTE") || sku.includes("A3")) return "GLOBAL-FAP-A3";
+  if (sku.endsWith("A2-MATTE") || sku.includes("A2")) return "GLOBAL-FAP-A2";
+  if (sku.endsWith("A1-MATTE") || sku.includes("A1")) return "GLOBAL-FAP-A1";
+  return "GLOBAL-FAP-A3";
+}
+
+/**
+ * Resolve print asset URL from line item properties or registry
+ */
+function resolveArtworkUrl(item) {
+  const customAsset = item.properties?.find((p) => p.name === "_print_asset_url")?.value;
+  if (customAsset) return customAsset;
+
+  if (item.sku) {
+    const prefix = item.sku.split("-")[0].toUpperCase();
+    if (ARTWORK_REGISTRY[prefix]) {
+      return ARTWORK_REGISTRY[prefix];
+    }
+  }
+  return `https://assets.yourbrand.co.uk/artworks/${item.sku || "default"}.jpg`;
+}
+
+/**
+ * Validate Shopify Webhook HMAC-SHA256 signature
+ */
+function isValidShopifyWebhook(req) {
+  const secret = process.env.SHOPIFY_WEBHOOK_SECRET;
+  // If in sandbox/dev or placeholder secret, log and allow
+  if (!secret || secret.startsWith("shpss_xxxx")) {
+    return true;
+  }
+  const hmacHeader = req.get("X-Shopify-Hmac-Sha256");
+  if (!hmacHeader || !req.rawBody) {
+    return false;
+  }
+  const generatedHash = crypto
+    .createHmac("sha256", secret)
+    .update(req.rawBody)
+    .digest("base64");
+  try {
+    return crypto.timingSafeEqual(
+      Buffer.from(generatedHash, "utf8"),
+      Buffer.from(hmacHeader, "utf8")
+    );
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Health Check & Status Endpoint
+ */
+app.get(["/", "/health"], (req, res) => {
+  res.status(200).json({
+    status: "healthy",
+    service: "uk-dropship-automation-bridge",
+    environment: process.env.PRODIGI_ENVIRONMENT || "sandbox",
+  });
+});
+
 /**
  * 1. SHOPIFY ORDER WEBHOOK: orders/paid
  * Triggers upon customer payment. Validates risk & routes directly to Prodigi UK.
  */
 app.post("/webhooks/shopify/orders-paid", async (req, res) => {
   try {
+    if (!isValidShopifyWebhook(req)) {
+      console.warn("[SECURITY] Rejected orders-paid webhook: Invalid Shopify HMAC signature.");
+      return res.status(401).json({ error: "Invalid webhook signature." });
+    }
+
     const order = req.body;
 
     // Fraud Screening Rule
@@ -39,10 +134,8 @@ app.post("/webhooks/shopify/orders-paid", async (req, res) => {
     }
 
     const prodigiItems = order.line_items.map((item) => {
-      const matchedSku = SKU_MAPPING[item.sku] || "GLOBAL-FAP-A3";
-      const artworkUrl =
-        (item.properties && item.properties.find((p) => p.name === "_print_asset_url")?.value) ||
-        `https://assets.yourbrand.co.uk/artworks/${item.sku}.jpg`;
+      const matchedSku = resolveProdigiSku(item.sku);
+      const artworkUrl = resolveArtworkUrl(item);
 
       return {
         id: item.id.toString(),
@@ -152,6 +245,16 @@ app.post("/webhooks/returns/damage-claim", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`UK Dropship Automation Bridge running on port ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`UK Dropship Automation Bridge running on port ${PORT}`);
+  });
+}
+
+app.resolveProdigiSku = resolveProdigiSku;
+app.resolveArtworkUrl = resolveArtworkUrl;
+app.isValidShopifyWebhook = isValidShopifyWebhook;
+app.SKU_MAPPING = SKU_MAPPING;
+app.ARTWORK_REGISTRY = ARTWORK_REGISTRY;
+
+module.exports = app;
