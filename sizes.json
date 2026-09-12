@@ -1,0 +1,42 @@
+[
+  {
+    "id": "A4",
+    "name": "A4 Print (21 x 29.7 cm)",
+    "pricePence": 1899,
+    "priceFormatted": "£18.99",
+    "skuSuffix": "A4-MATTE",
+    "prodigiSku": "GLOBAL-FAP-A4",
+    "paper": "200gsm Archival Matte",
+    "popular": false
+  },
+  {
+    "id": "A3",
+    "name": "A3 Print (29.7 x 42 cm)",
+    "pricePence": 2499,
+    "priceFormatted": "£24.99",
+    "skuSuffix": "A3-MATTE",
+    "prodigiSku": "GLOBAL-FAP-A3",
+    "paper": "200gsm Archival Matte",
+    "popular": true
+  },
+  {
+    "id": "A2",
+    "name": "A2 Print (42 x 59.4 cm)",
+    "pricePence": 3499,
+    "priceFormatted": "£34.99",
+    "skuSuffix": "A2-MATTE",
+    "prodigiSku": "GLOBAL-FAP-A2",
+    "paper": "200gsm Archival Matte",
+    "popular": false
+  },
+  {
+    "id": "A1",
+    "name": "A1 Statement Print (59.4 x 84.1 cm)",
+    "pricePence": 4999,
+    "priceFormatted": "£49.99",
+    "skuSuffix": "A1-MATTE",
+    "prodigiSku": "GLOBAL-FAP-A1",
+    "paper": "200gsm Archival Matte",
+    "popular": false
+  }
+]

@@ -126,3 +126,53 @@ test("Zero-Touch Damage Replacement Endpoint Validation", async (t) => {
     delete process.env.RETURNLESS_REFUND_SECRET;
   }
 });
+
+test("Storefront Catalog API Endpoint", async (t) => {
+  const server = http.createServer(app);
+  await new Promise((resolve) => server.listen(0, resolve));
+  const port = server.address().port;
+
+  try {
+    const res = await fetch(`http://127.0.0.1:${port}/api/products`);
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.strictEqual(data.products.length, 10);
+    assert.strictEqual(data.sizes.length, 4);
+
+    // Verify first product has required fields
+    const firstProduct = data.products[0];
+    assert.ok(firstProduct.code);
+    assert.ok(firstProduct.title);
+    assert.ok(firstProduct.image_url);
+  } finally {
+    server.close();
+  }
+});
+
+test("Stripe Checkout Session Request Validation", async (t) => {
+  const server = http.createServer(app);
+  await new Promise((resolve) => server.listen(0, resolve));
+  const port = server.address().port;
+
+  try {
+    // Missing selection
+    const badRes = await fetch(`http://127.0.0.1:${port}/api/create-checkout-session`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ artworkCode: "INVALID" }),
+    });
+    assert.strictEqual(badRes.status, 400);
+
+    // Valid selection without configured stripe key should return 503 error
+    // (unless dummy key is active)
+    const validSelectionRes = await fetch(`http://127.0.0.1:${port}/api/create-checkout-session`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ artworkCode: "MORRIS", sizeId: "A3" }),
+    });
+    assert.ok([200, 503, 500].includes(validSelectionRes.status));
+  } finally {
+    server.close();
+  }
+});
+

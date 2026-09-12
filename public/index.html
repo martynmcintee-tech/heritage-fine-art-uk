@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heritage Fine Art UK | Museum Giclée Prints on 200gsm Archival Matte</title>
+  <meta name="description" content="Curated fine art & botanical prints reproduced with 12-colour archival pigment inks in the UK. Free Royal Mail 48 Tracked delivery and zero-touch damage guarantee.">
+  <link rel="preconnect" href="https://upload.wikimedia.org">
+  <style>
+    :root {
+      --bg: #fbf9f5;
+      --bg-card: #ffffff;
+      --text: #1a1918;
+      --text-muted: #66625d;
+      --accent: #1e3a2b;
+      --accent-hover: #294e3a;
+      --gold: #b38b4d;
+      --border: #e6e2da;
+      --radius: 8px;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Announcement Bar */
+    .announcement-bar {
+      background: var(--accent);
+      color: #ffffff;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 0.88rem;
+      letter-spacing: 0.5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .announcement-bar span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Header */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .brand h1 {
+      font-family: var(--font-serif);
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .brand p {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: var(--gold);
+      margin-top: -2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1240px;
+      margin: 40px auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero-img-container {
+      position: relative;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      border: 1px solid var(--border);
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+
+    .hero-badge {
+      position: absolute;
+      top: 32px;
+      left: 32px;
+      background: rgba(30, 58, 43, 0.92);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 20px;
+    }
+
+    .hero-content h2 {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: var(--accent);
+    }
+
+    .hero-content .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .spec-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      border-radius: var(--radius);
+    }
+
+    .spec-card strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--accent);
+    }
+
+    .spec-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #ffffff;
+      padding: 16px 36px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(30, 58, 43, 0.25);
+    }
+
+    .btn-cta:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Curated Gallery Section */
+    .section-title {
+      text-align: center;
+      max-width: 700px;
+      margin: 80px auto 40px;
+      padding: 0 20px;
+    }
+
+    .section-title h3 {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    .gallery {
+      max-width: 1240px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 32px;
+    }
+
+    .art-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .art-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+
+    .art-img-wrap {
+      width: 100%;
+      height: 380px;
+      overflow: hidden;
+      background: #f0ece1;
+      position: relative;
+    }
+
+    .art-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .art-card:hover .art-img {
+      transform: scale(1.03);
+    }
+
+    .art-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .art-artist {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .art-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    .art-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    .art-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+
+    .art-price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .art-price span {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .btn-select {
+      background: #ffffff;
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+      padding: 8px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-select:hover {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    /* Modal Dialog */
+    dialog {
+      margin: auto;
+      padding: 0;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    dialog::backdrop {
+      background: rgba(15, 23, 18, 0.65);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-content {
+      padding: 28px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h4 {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      line-height: 1.3;
+    }
+
+    .btn-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      line-height: 1;
+    }
+
+    .modal-preview {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 24px;
+      background: var(--bg);
+      padding: 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .modal-thumb {
+      width: 100px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .size-selector-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .size-option {
+      border: 2px solid var(--border);
+      padding: 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .size-option.selected {
+      border-color: var(--accent);
+      background: #f3f7f4;
+    }
+
+    .size-option .name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: block;
+    }
+
+    .size-option .price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 4px;
+      display: block;
+    }
+
+    .size-option .badge {
+      position: absolute;
+      top: -8px;
+      right: 10px;
+      background: var(--gold);
+      color: #ffffff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      text-transform: uppercase;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: var(--accent);
+      color: #ffffff;
+      padding: 16px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: background 0.2s;
+    }
+
+    .checkout-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .checkout-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .trust-row {
+      margin-top: 14px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      max-width: 800px;
+      margin: 80px auto;
+      padding: 0 20px;
+    }
+
+    .faq-section h3 {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    details {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      padding: 16px 20px;
+      transition: background 0.2s;
+    }
+
+    details[open] {
+      background: #ffffff;
+      border-color: var(--accent);
+    }
+
+    summary {
+      font-weight: 600;
+      font-size: 1.02rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      font-size: 1.3rem;
+      color: var(--accent);
+    }
+
+    details[open] summary::after {
+      content: "−";
+    }
+
+    details p {
+      margin-top: 12px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      background: #151a17;
+      color: #9da39e;
+      padding: 60px 24px 30px;
+      border-top: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .footer-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-col h5 {
+      color: #ffffff;
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 8px;
+    }
+
+    .footer-col a {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .footer-col a:hover {
+      color: #ffffff;
+    }
+
+    .footer-bottom {
+      max-width: 1240px;
+      margin: 0 auto;
+      text-align: center;
+      border-top: 1px solid #232a25;
+      padding-top: 24px;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 840px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .hero-img {
+        height: 380px;
+      }
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Banner -->
+  <div class="announcement-bar">
+    <span>🇬🇧 Custom Printed in Alton, Hampshire UK</span>
+    <span>•</span>
+    <span>📮 Royal Mail 48 Tracked Free Delivery on All Orders</span>
+    <span>•</span>
+    <span>🛡️ Zero-Touch Damage Guarantee</span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <a href="/" class="brand">
+      <h1>Heritage Fine Art UK</h1>
+      <p>Museum Archive Editions</p>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Masterpieces</a></li>
+      <li><a href="#specifications">Giclée Quality</a></li>
+      <li><a href="#faq">Delivery & FAQ</a></li>
+    </ul>
+  </header>
+
+  <!-- Hero Feature -->
+  <section class="hero">
+    <div class="hero-img-container">
+      <span class="hero-badge">Curator's Choice</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Morris_Strawberry_Thief_1883.jpg" 
+           alt="William Morris Strawberry Thief Fine Art Print" 
+           class="hero-img"
+           fetchpriority="high"
+           width="600" 
+           height="520">
+    </div>
+    <div class="hero-content">
+      <h2>Timeless British & World Masterpieces, Crafted for Modern Spaces.</h2>
+      <p class="subtitle">Printed on 200gsm museum-grade archival matte paper using genuine 12-colour pigment inks that resist fading for over 100 years.</p>
+      
+      <div class="spec-grid">
+        <div class="spec-card">
+          <strong>200gsm Heavyweight Art Paper</strong>
+          <span>FSC certified archival matte</span>
+        </div>
+        <div class="spec-card">
+          <strong>12-Colour UltraChrome HDR</strong>
+          <span>Vivid museum pigment reproduction</span>
+        </div>
+        <div class="spec-card">
+          <strong>Free Royal Mail 48 Tracked</strong>
+          <span>Delivered in heavy-duty postal tubes</span>
+        </div>
+        <div class="spec-card">
+          <strong>Damage-Free Guarantee</strong>
+          <span>Returnless free replacement if transit-damaged</span>
+        </div>
+      </div>
+
+      <button class="btn-cta" onclick="openOrderModal('MORRIS')">
+        Order Strawberry Thief Print — from £18.99
+      </button>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <div class="section-title" id="gallery">
+    <h3>Curated Gallery Collection</h3>
+    <p>Choose your masterpiece. Each edition is custom-crafted to order in Alton, Hampshire and dispatched with Royal Mail tracking.</p>
+  </div>
+
+  <main class="gallery" id="galleryGrid">
+    <!-- Rendered dynamically from /api/products -->
+  </main>
+
+  <!-- Quality Specifications -->
+  <section id="specifications" style="background:#ffffff; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:70px 24px;">
+    <div style="max-width:1100px; margin:0 auto; text-align:center;">
+      <h3 style="font-family:var(--font-serif); font-size:2.2rem; margin-bottom:16px;">The Heritage Quality Standard</h3>
+      <p style="color:var(--text-muted); max-width:650px; margin:0 auto 40px;">Unlike commercial mass-market poster printers, our Alton studio produces fine art giclée editions that honour original museum fidelity.</p>
+      
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:24px; text-align:left;">
+        <div style="background:var(--bg); padding:24px; border-radius:var(--radius); border:1px solid var(--border);">
+          <div style="font-size:1.8rem; margin-bottom:10px;">🎨</div>
+          <h4 style="font-size:1.1rem; margin-bottom:8px;">12-Colour Pigment Giclée</h4>
+          <p style="font-size:0.88rem; color:var(--text-muted);">True archival pigment formulation offering exceptional tonal transitions and true velvety blacks.</p>
+        </div>
+        <div style="background:var(--bg); padding:24px; border-radius:var(--radius); border:1px solid var(--border);">
+          <div style="font-size:1.8rem; margin-bottom:10px;">📜</div>
+          <h4 style="font-size:1.1rem; margin-bottom:8px;">200gsm Archival Paper</h4>
+          <p style="font-size:0.88rem; color:var(--text-muted);">Smooth matte surface with zero reflective glare, perfect for framing under glass or acrylic.</p>
+        </div>
+        <div style="background:var(--bg); padding:24px; border-radius:var(--radius); border:1px solid var(--border);">
+          <div style="font-size:1.8rem; margin-bottom:10px;">📦</div>
+          <h4 style="font-size:1.1rem; margin-bottom:8px;">Postal Tube Protection</h4>
+          <p style="font-size:0.88rem; color:var(--text-muted);">Rolled inside protective glassine wrapping and enclosed in reinforced spiral cardboard tubes.</p>
+        </div>
+        <div style="background:var(--bg); padding:24px; border-radius:var(--radius); border:1px solid var(--border);">
+          <div style="font-size:1.8rem; margin-bottom:10px;">⚡</div>
+          <h4 style="font-size:1.1rem; margin-bottom:8px;">24-48h UK Dispatch</h4>
+          <p style="font-size:0.88rem; color:var(--text-muted);">Orders enter UK studio queue automatically. Royal Mail 48 Tracked takes 2-3 business days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section" id="faq">
+    <h3>Frequently Asked Questions</h3>
+
+    <details>
+      <summary>How much is delivery to the UK?</summary>
+      <p>Delivery is completely <strong>FREE on all orders</strong> across England, Scotland, Wales, and Northern Ireland via Royal Mail 48 Tracked. There are no hidden fees at checkout.</p>
+    </details>
+
+    <details>
+      <summary>How long until my print arrives?</summary>
+      <p>Your print is custom produced in our UK workshop within 24 to 48 hours. Royal Mail 48 Tracked typically delivers within 2 to 3 business days following dispatch. You will receive an automated tracking link by email.</p>
+    </details>
+
+    <details>
+      <summary>What happens if my print arrives bent or damaged?</summary>
+      <p>We operate a 100% <strong>Zero-Touch Damage Guarantee</strong>. You do NOT have to return damaged prints to the post office. Simply send a quick photo of the damage to support, and our system automatically submits a brand-new priority reprint at zero charge.</p>
+    </details>
+
+    <details>
+      <summary>Are frames included?</summary>
+      <p>All prints are sold unframed to allow you to select standard UK frames that suit your interior decor. All sizes (A4, A3, A2, A1) are standard ISO dimensions readily available from any UK retailer (IKEA, John Lewis, Habitat, Amazon).</p>
+    </details>
+
+    <details>
+      <summary>What payment methods do you accept?</summary>
+      <p>Checkout is processed securely through Stripe. We accept Apple Pay, Google Pay, Visa, Mastercard, and American Express with 256-bit SSL encryption.</p>
+    </details>
+  </section>
+
+  <!-- Modal Order Dialog -->
+  <dialog id="orderModal" closedby="any" aria-labelledby="modalArtTitle">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <span id="modalArtist" style="font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--gold); font-weight:700;"></span>
+          <h4 id="modalArtTitle">Select Size & Order</h4>
+        </div>
+        <button class="btn-close" onclick="closeOrderModal()" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-preview">
+        <img id="modalImg" src="" alt="" class="modal-thumb">
+        <div>
+          <p id="modalDesc" style="font-size:0.85rem; color:var(--text-muted); line-height:1.4; margin-bottom:8px;"></p>
+          <span style="font-size:0.8rem; background:#eaf2ec; color:var(--accent); padding:3px 8px; border-radius:4px; font-weight:600;">
+            ✓ Free Royal Mail 48 Tracked
+          </span>
+        </div>
+      </div>
+
+      <span class="size-selector-label">Choose Print Size:</span>
+      <div class="size-grid" id="sizeOptions">
+        <!-- Rendered dynamically from /api/products sizes -->
+      </div>
+
+      <button id="btnPay" class="checkout-btn" onclick="triggerStripeCheckout()">
+        <span id="btnPayText">Pay with Card / Apple Pay — £24.99</span>
+      </button>
+
+      <div class="trust-row">
+        <span>🔒 256-bit Secure Stripe Checkout</span>
+        <span>•</span>
+        <span>🇬🇧 UK Printed & Dispatched</span>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Policy Dialog -->
+  <dialog id="policyModal" closedby="any" aria-labelledby="policyModalTitle">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="policyModalTitle">Policy</h4>
+        <button class="btn-close" onclick="document.getElementById('policyModal').close()">&times;</button>
+      </div>
+      <div id="policyModalBody" style="font-size:0.92rem; color:var(--text-muted); line-height:1.7; max-height:60vh; overflow-y:auto; padding-right:10px;"></div>
+    </div>
+  </dialog>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h5>Heritage Fine Art UK</h5>
+        <p style="margin-bottom:12px;">Archival museum fine art giclée editions printed on 200gsm heavyweight matte paper in Alton, Hampshire.</p>
+        <p style="font-size:0.8rem; color:#78807a;">Powered by automated zero-touch dropshipping bridge & direct Stripe Checkout.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="#gallery">Collection</a></li>
+          <li><a href="#specifications">Specifications</a></li>
+          <li><a href="#faq">Delivery FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Customer Care & Legal</h5>
+        <ul>
+          <li><a onclick="showPolicy('shipping')">Shipping Policy</a></li>
+          <li><a onclick="showPolicy('refund')">Returnless Damage Guarantee</a></li>
+          <li><a onclick="showPolicy('privacy')">Privacy Policy (GDPR)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Heritage Fine Art UK. All Rights Reserved. Masterpieces reproduced from verified open access museum archives.
+    </div>
+  </footer>
+
+  <script>
+    let productsList = [];
+    let sizesList = [];
+    let selectedArtwork = null;
+    let selectedSize = null;
+
+    const dialog = document.getElementById('orderModal');
+    const policyModal = document.getElementById('policyModal');
+
+    // Fallback for browsers without native closedby support
+    if (!('closedBy' in HTMLDialogElement.prototype)) {
+      [dialog, policyModal].forEach(d => {
+        d.addEventListener('click', (event) => {
+          if (event.target !== d) return;
+          const rect = d.getBoundingClientRect();
+          const inDialog = (
+            rect.top <= event.clientY && event.clientY <= rect.top + rect.height &&
+            rect.left <= event.clientX && event.clientX <= rect.left + rect.width
+          );
+          if (!inDialog) d.close();
+        });
+      });
+    }
+
+    // Load products and sizes from /api/products
+    async function initStore() {
+      try {
+        const res = await fetch('/api/products');
+        const data = await res.json();
+        productsList = data.products || [];
+        sizesList = data.sizes || [];
+        renderGallery();
+      } catch (e) {
+        console.error("Failed to load catalog:", e);
+      }
+    }
+
+    function renderGallery() {
+      const grid = document.getElementById('galleryGrid');
+      grid.innerHTML = productsList.map(p => `
+        <article class="art-card">
+          <div class="art-img-wrap">
+            <img src="${p.image_url}" alt="${p.title}" class="art-img" loading="lazy" width="400" height="380">
+          </div>
+          <div class="art-body">
+            <span class="art-artist">${p.artist || 'Archive Print'}</span>
+            <h4 class="art-title">${p.title}</h4>
+            <p class="art-desc">${p.desc}</p>
+            <div class="art-footer">
+              <div class="art-price">from £18.99 <span>/ Free UK Delivery</span></div>
+              <button class="btn-select" onclick="openOrderModal('${p.code}')">Order Print</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function openOrderModal(code) {
+      selectedArtwork = productsList.find(p => p.code === code) || productsList[0];
+      if (!selectedArtwork) return;
+
+      document.getElementById('modalArtist').textContent = selectedArtwork.artist;
+      document.getElementById('modalArtTitle').textContent = selectedArtwork.title;
+      document.getElementById('modalDesc').textContent = selectedArtwork.desc;
+      document.getElementById('modalImg').src = selectedArtwork.image_url;
+      document.getElementById('modalImg').alt = selectedArtwork.title;
+
+      // Default to A3 (Most popular)
+      selectedSize = sizesList.find(s => s.id === 'A3') || sizesList[0];
+
+      renderSizeOptions();
+      updatePayButton();
+      dialog.showModal();
+    }
+
+    function closeOrderModal() {
+      dialog.close();
+    }
+
+    function renderSizeOptions() {
+      const container = document.getElementById('sizeOptions');
+      container.innerHTML = sizesList.map(s => `
+        <div class="size-option ${s.id === selectedSize.id ? 'selected' : ''}" onclick="selectSize('${s.id}')">
+          ${s.popular ? '<span class="badge">Most Popular</span>' : ''}
+          <span class="name">${s.name.split(' (')[0]}</span>
+          <span style="font-size:0.75rem; color:var(--text-muted);">${s.name.split(' (')[1]?.replace(')', '') || ''}</span>
+          <span class="price">${s.priceFormatted}</span>
+        </div>
+      `).join('');
+    }
+
+    function selectSize(sizeId) {
+      selectedSize = sizesList.find(s => s.id === sizeId);
+      renderSizeOptions();
+      updatePayButton();
+    }
+
+    function updatePayButton() {
+      const btn = document.getElementById('btnPayText');
+      if (selectedSize) {
+        btn.textContent = `Pay with Card / Apple Pay — ${selectedSize.priceFormatted}`;
+      }
+    }
+
+    async function triggerStripeCheckout() {
+      const btn = document.getElementById('btnPay');
+      btn.disabled = true;
+      btn.innerHTML = 'Connecting to Secure Checkout...';
+
+      try {
+        const res = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            artworkCode: selectedArtwork.code,
+            sizeId: selectedSize.id
+          })
+        });
+
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert('Checkout note: ' + (data.error || 'Please configure your STRIPE_SECRET_KEY in .env'));
+          btn.disabled = false;
+          updatePayButton();
+        }
+      } catch (err) {
+        alert('Network error connecting to checkout: ' + err.message);
+        btn.disabled = false;
+        updatePayButton();
+      }
+    }
+
+    const POLICIES = {
+      shipping: `
+        <h3>UK Shipping Policy</h3>
+        <p><strong>Courier:</strong> Royal Mail 48 Tracked on all domestic orders.</p>
+        <p><strong>Cost:</strong> 100% Free UK Delivery on all prints.</p>
+        <p><strong>Production:</strong> Each print is individually produced using 12-colour archival pigment giclée in Alton, Hampshire within 24–48 hours.</p>
+        <p><strong>Delivery Time:</strong> 2 to 3 business days following dispatch. Tracking link is emailed automatically.</p>
+      `,
+      refund: `
+        <h3>Damage-Free Returnless Replacement Policy</h3>
+        <p>We guarantee your art print arrives in pristine gallery condition. If your tube or print arrives creased, bent, or damaged by the courier:</p>
+        <ol style="margin-left:20px; margin-top:10px;">
+          <li>Take a photo of the damaged print and outer packaging.</li>
+          <li>Reply to your order email with the photograph.</li>
+          <li>Our automated system immediately submits a brand-new priority reprint at <strong>£0 cost</strong>. You do NOT have to post the damaged print back.</li>
+        </ol>
+      `,
+      privacy: `
+        <h3>GDPR Privacy Policy</h3>
+        <p>Heritage Fine Art UK complies with the UK Data Protection Act 2018 and UK GDPR. We only collect shipping details necessary to fulfill and dispatch your print via Royal Mail. Payment card information is handled directly and securely by Stripe Inc; we never store your payment card numbers.</p>
+      `
+    };
+
+    function showPolicy(type) {
+      document.getElementById('policyModalTitle').textContent = type.toUpperCase() + ' POLICY';
+      document.getElementById('policyModalBody').innerHTML = POLICIES[type] || '';
+      policyModal.showModal();
+    }
+
+    initStore();
+  </script>
+</body>
+</html>

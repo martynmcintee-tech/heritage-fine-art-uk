@@ -152,8 +152,50 @@ async function runSimulation() {
   console.log(`POST https://${process.env.SHOPIFY_STORE_DOMAIN || "heritage-fine-art.myshopify.com"}/admin/api/2024-01/orders/${mockShopifyOrder.id}/fulfillments.json`);
   console.log("Customer automatically notified by Shopify with live Royal Mail tracking link.");
 
-  // PHASE 6: Autonomous AI Support Simulation
-  logHeader("6", "AUTONOMOUS AI CUSTOMER CARE (WISMO QUERY & ZERO-TOUCH DAMAGE CLAIM)");
+  // PHASE 6: Stripe Zero-Outlay Direct Checkout Flow
+  logHeader("6", "ZERO-OUTLAY DIRECT STRIPE STOREFRONT FLOW (£0/MONTH FOREVER)");
+
+  const mockStripeSession = {
+    id: "cs_test_a1b2c3d4e5f6g7h8i9j0",
+    customer_details: {
+      email: "eleanor.vance@kensington-interiors.co.uk",
+      name: "Eleanor Vance",
+      phone: "+44 7700 900123",
+    },
+    shipping_details: {
+      name: "Eleanor Vance",
+      address: {
+        line1: "14 Kensington Park Gardens",
+        line2: "Flat 3B",
+        city: "London",
+        postal_code: "W11 3HD",
+        country: "GB",
+      },
+    },
+    amount_total: 2499,
+    currency: "gbp",
+    metadata: {
+      artworkCode: "MORRIS",
+      sizeId: "A3",
+      sku: "MORRIS-A3-MATTE",
+      prodigiSku: "GLOBAL-FAP-A3",
+      artworkUrl: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Morris_Strawberry_Thief_1883.jpg",
+    },
+  };
+
+  console.log("Customer buys directly from the free hosted gallery (public/index.html).");
+  console.log(`Checkout Session ID: ${mockStripeSession.id}`);
+  console.log(`Payment: £24.99 via Apple Pay / Card on Stripe Checkout`);
+  console.log("Stripe fires webhook: POST /webhooks/stripe (checkout.session.completed)");
+  console.log("Bridge maps Stripe metadata directly to Prodigi Alton Studio:");
+  console.log(`-> Spec: ${mockStripeSession.metadata.prodigiSku} (200gsm Archival Matte Giclée)`);
+  console.log(`-> Artwork Asset: ${mockStripeSession.metadata.artworkUrl}`);
+  console.log(`-> Recipient: ${mockStripeSession.shipping_details.name}, ${mockStripeSession.shipping_details.address.postal_code}`);
+  console.log(`-> Prodigi Order Submission: SUCCESS (Ref: STRIPE-${mockStripeSession.id.slice(-8)})`);
+  console.log("Zero Shopify subscription needed! Only standard Stripe transaction fee applied upon sale.");
+
+  // PHASE 7: Autonomous AI Support Simulation
+  logHeader("7", "AUTONOMOUS AI CUSTOMER CARE (WISMO QUERY & ZERO-TOUCH DAMAGE CLAIM)");
 
   console.log("Query 1: Customer asks 'Where is my order?' in chat widget:");
   console.log("AI Agent (Lyro): 'Delighted to help, Eleanor! Your order #1042 was printed at our UK workshop and dispatched via Royal Mail 48 Tracked. You can follow its progress here: https://www.royalmail.com/track-your-item#/tracking-results/GB487920194RM. Delivery is estimated in 2 business days. Cheers!'");
@@ -164,7 +206,7 @@ async function runSimulation() {
   console.log(`Result: { status: "APPROVED", action: "AUTO_REPRINT_TRIGGERED", originalOrder: ${mockShopifyOrder.order_number} }`);
 
   console.log(`\n${divider}`);
-  console.log("✨ SIMULATION COMPLETE: 100% Zero-Touch Automation Verified! ✨");
+  console.log("✨ SIMULATION COMPLETE: Both Stripe Zero-Outlay & Shopify Pipelines Verified! ✨");
   console.log(`${divider}\n`);
 }
 

@@ -1,12 +1,22 @@
 require("dotenv").config();
 const crypto = require("crypto");
+const path = require("path");
 const express = require("express");
 const axios = require("axios");
+const Stripe = require("stripe");
 const ProdigiClient = require("./prodigi_client");
+
+const products = require("./products.json");
+const sizes = require("./sizes.json");
 
 const app = express();
 
-// Preserve raw body buffer for Shopify HMAC SHA256 validation
+// Initialize Stripe if secret key is present
+const stripe = process.env.STRIPE_SECRET_KEY
+  ? new Stripe(process.env.STRIPE_SECRET_KEY)
+  : null;
+
+// Preserve raw body buffer for Shopify & Stripe HMAC signature validation
 app.use(
   express.json({
     verify: (req, res, buf) => {
@@ -14,6 +24,9 @@ app.use(
     },
   })
 );
+
+// Serve static fine art storefront
+app.use(express.static(path.join(__dirname, "public")));
 
 const prodigi = new ProdigiClient(
   process.env.PRODIGI_API_KEY,
@@ -101,12 +114,174 @@ function isValidShopifyWebhook(req) {
 /**
  * Health Check & Status Endpoint
  */
-app.get(["/", "/health"], (req, res) => {
+app.get("/health", (req, res) => {
   res.status(200).json({
     status: "healthy",
     service: "uk-dropship-automation-bridge",
+    stripeConfigured: !!stripe,
     environment: process.env.PRODIGI_ENVIRONMENT || "sandbox",
   });
+});
+
+/**
+ * 0. GET CATALOG PRODUCTS & SIZES (For Storefront Frontend)
+ */
+app.get("/api/products", (req, res) => {
+  res.status(200).json({ products, sizes });
+});
+
+/**
+ * 0.1 CREATE STRIPE CHECKOUT SESSION (Zero-Outlay Storefront)
+ */
+app.post("/api/create-checkout-session", async (req, res) => {
+  try {
+    const { artworkCode, sizeId } = req.body;
+    const product = products.find((p) => p.code === artworkCode);
+    const size = sizes.find((s) => s.id === sizeId);
+
+    if (!product || !size) {
+      return res.status(400).json({ error: "Invalid product or size selection." });
+    }
+
+    if (!stripe) {
+      return res.status(503).json({
+        error: "Stripe is not yet configured. Please add STRIPE_SECRET_KEY to your .env file.",
+      });
+    }
+
+    const origin = req.headers.origin || `http://${req.headers.host || "localhost:3000"}`;
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      shipping_address_collection: {
+        allowed_countries: ["GB"],
+      },
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: "fixed_amount",
+            fixed_amount: { amount: 0, currency: "gbp" },
+            display_name: "Royal Mail 48 Tracked (Free UK Delivery)",
+            delivery_estimate: {
+              minimum: { unit: "business_day", value: 2 },
+              maximum: { unit: "business_day", value: 3 },
+            },
+          },
+        },
+      ],
+      line_items: [
+        {
+          price_data: {
+            currency: "gbp",
+            unit_amount: size.pricePence,
+            product_data: {
+              name: `${product.title} - ${size.name}`,
+              description: `${product.desc} (Giclée on ${size.paper})`,
+              images: [product.image_url],
+              metadata: {
+                artworkCode: product.code,
+                size: size.id,
+                sku: `${product.code}-${size.skuSuffix}`,
+              },
+            },
+          },
+          quantity: 1,
+        },
+      ],
+      metadata: {
+        artworkCode: product.code,
+        sizeId: size.id,
+        sku: `${product.code}-${size.skuSuffix}`,
+        prodigiSku: size.prodigiSku,
+        artworkUrl: product.image_url,
+      },
+      success_url: `${origin}/success.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/cancel.html`,
+    });
+
+    res.status(200).json({ url: session.url, id: session.id });
+  } catch (err) {
+    console.error("[STRIPE CHECKOUT ERROR]:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/**
+ * 0.2 STRIPE WEBHOOK: checkout.session.completed
+ * Dispatches directly to Prodigi UK without any Shopify store required!
+ */
+app.post("/webhooks/stripe", async (req, res) => {
+  try {
+    const sig = req.headers["stripe-signature"];
+    let event;
+
+    if (process.env.STRIPE_WEBHOOK_SECRET && !process.env.STRIPE_WEBHOOK_SECRET.startsWith("whsec_xxxx")) {
+      try {
+        event = stripe.webhooks.constructEvent(
+          req.rawBody,
+          sig,
+          process.env.STRIPE_WEBHOOK_SECRET
+        );
+      } catch (err) {
+        console.error("[STRIPE SIGNATURE ERROR]:", err.message);
+        return res.status(400).send(`Webhook signature error: ${err.message}`);
+      }
+    } else {
+      event = req.body;
+    }
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
+      const shipping = session.shipping_details || session.customer_details;
+      const metadata = session.metadata || {};
+
+      if (!shipping || !shipping.address) {
+        console.warn("[STRIPE WEBHOOK]: Missing shipping address on session:", session.id);
+        return res.status(200).send("No shipping address.");
+      }
+
+      const prodigiSku = metadata.prodigiSku || resolveProdigiSku(metadata.sku);
+      const artworkUrl = metadata.artworkUrl || resolveArtworkUrl({ sku: metadata.sku });
+
+      const prodigiOrder = await prodigi.createOrder({
+        merchantReference: `STRIPE-${session.id.slice(-8)}`,
+        recipient: {
+          name: shipping.name || session.customer_details?.name || "Art Collector",
+          address1: shipping.address.line1,
+          address2: shipping.address.line2 || "",
+          zip: shipping.address.postal_code,
+          city: shipping.address.city,
+          province: shipping.address.state || "",
+          countryCode: shipping.address.country || "GB",
+          email: session.customer_details?.email,
+          phone: session.customer_details?.phone || shipping.phone || "",
+        },
+        items: [
+          {
+            id: session.id,
+            sku: prodigiSku,
+            copies: 1,
+            artworkUrl: artworkUrl,
+            finish: "matte",
+          },
+        ],
+        shippingMethod: "Budget", // Royal Mail 48 Tracked
+        metadata: {
+          stripeSessionId: session.id,
+          source: "direct-stripe-storefront",
+        },
+      });
+
+      console.log(`[STRIPE AUTO-FULFILLED] Session ${session.id} submitted to Prodigi ID: ${prodigiOrder.order.id}`);
+      return res.status(200).json({ success: true, prodigiOrderId: prodigiOrder.order.id });
+    }
+
+    res.status(200).json({ received: true });
+  } catch (error) {
+    console.error("[STRIPE FULFILL ERROR]:", error.message);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 /**
