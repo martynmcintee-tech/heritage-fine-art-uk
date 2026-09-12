@@ -253,4 +253,23 @@ test("Social Syndication Feed Endpoint", async (t) => {
   }
 });
 
+test("Pinterest Native RSS 2.0 Auto-Publish Feed", async (t) => {
+  const server = http.createServer(app);
+  await new Promise((resolve) => server.listen(0, resolve));
+  const port = server.address().port;
+
+  try {
+    const res = await fetch(`http://127.0.0.1:${port}/feeds/pinterest.xml`);
+    assert.strictEqual(res.status, 200);
+    assert.ok(res.headers.get("content-type").includes("xml"));
+    const xml = await res.text();
+    assert.ok(xml.includes("<rss version=\"2.0\">"));
+    assert.ok(xml.includes("<enclosure"));
+    assert.ok(xml.includes("William Morris"));
+  } finally {
+    server.close();
+  }
+});
+
+
 

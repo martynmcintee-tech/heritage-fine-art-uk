@@ -232,6 +232,43 @@ app.get("/robots.txt", (req, res) => {
 });
 
 /**
+ * PINTEREST NATIVE AUTO-PUBLISH RSS FEED
+ * Paste this into Pinterest Settings -> Bulk Create Pins -> Auto-Publish
+ */
+app.get("/feeds/pinterest.xml", (req, res) => {
+  const baseUrl = (process.env.APP_BASE_URL || `https://${req.headers.host || "heritage-fine-art-uk.onrender.com"}`).replace(/\/$/, "");
+
+  let itemsXml = "";
+  for (const product of products) {
+    const link = `${baseUrl}/product/${product.handle}?utm_source=pinterest&amp;utm_medium=organic_rss`;
+    const titleEscaped = escapeXml(`${product.title} — Archival Fine Art Print`);
+    const descEscaped = escapeXml(`Bring museum elegance to your home with ${product.title} (${product.artist}). Handcrafted in Alton, Hampshire on 200gsm archival matte paper with genuine 12-colour giclée inks. Includes Free Royal Mail 48 Tracked UK delivery. Use code HERITAGE10 for 10% off your order.`);
+
+    itemsXml += `
+    <item>
+      <title>${titleEscaped}</title>
+      <link>${link}</link>
+      <description>${descEscaped}</description>
+      <guid>${baseUrl}/product/${product.handle}</guid>
+      <enclosure url="${escapeXml(product.image_url)}" type="image/jpeg" length="0" />
+    </item>`;
+  }
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Heritage Fine Art UK | Curated Museum Editions</title>
+    <link>${baseUrl}</link>
+    <description>Archival Museum Fine Art Prints on 200gsm Matte Paper. Alton, Hampshire UK.</description>
+${itemsXml}
+  </channel>
+</rss>`;
+
+  res.header("Content-Type", "application/xml; charset=utf-8");
+  res.status(200).send(xml);
+});
+
+/**
  * SOCIAL & PINTEREST SYNDICATION FEED (For automated marketing bots)
  */
 app.get("/feeds/social.json", (req, res) => {
