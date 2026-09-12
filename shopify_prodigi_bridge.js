@@ -53,6 +53,8 @@ const ARTWORK_REGISTRY = {
   HERBAL: "https://upload.wikimedia.org/wikipedia/commons/8/83/Quillaja_saponaria_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-119.jpg",
   KLIMT: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Gustav_Klimt_016.jpg",
   SCANDI: "https://upload.wikimedia.org/wikipedia/commons/2/22/6_hilma_af_klint%2C_the_swan_no_16%2C_1915.jpg",
+  STENCIL: "https://heritage-fine-art-uk.onrender.com/artworks/banksy-stencil-bloom-art-print.jpg",
+  MICALLEF: "https://heritage-fine-art-uk.onrender.com/artworks/antony-micallef-expressive-portrait.jpg",
 };
 
 /**

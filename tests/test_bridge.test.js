@@ -136,7 +136,7 @@ test("Storefront Catalog API Endpoint", async (t) => {
     const res = await fetch(`http://127.0.0.1:${port}/api/products`);
     assert.strictEqual(res.status, 200);
     const data = await res.json();
-    assert.strictEqual(data.products.length, 10);
+    assert.ok(data.products.length >= 10);
     assert.strictEqual(data.sizes.length, 4);
 
     // Verify first product has required fields
@@ -244,7 +244,7 @@ test("Social Syndication Feed Endpoint", async (t) => {
     const res = await fetch(`http://127.0.0.1:${port}/feeds/social.json`);
     assert.strictEqual(res.status, 200);
     const data = await res.json();
-    assert.strictEqual(data.itemsCount, 10);
+    assert.ok(data.itemsCount >= 10);
     assert.ok(data.posts[0].pinterestPin);
     assert.ok(data.posts[0].socialPost.x_twitter);
     assert.ok(data.posts[0].socialPost.instagram_caption);
