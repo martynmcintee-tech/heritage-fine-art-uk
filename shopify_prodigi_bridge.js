@@ -43,6 +43,7 @@ const SKU_MAPPING = {
 
 // High-resolution public domain artwork asset registry
 const ARTWORK_REGISTRY = {
+  JAPANESE: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Great_Wave_off_Kanagawa2.jpg",
   BRUTALIST: "https://upload.wikimedia.org/wikipedia/commons/a/a0/D%C3%B6rte_Helm_-_Bauhaus_Exhibition_Postcard_No._14.jpg",
   MORRIS: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Morris_Strawberry_Thief_1883.jpg",
   HOKUSAI: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Great_Wave_off_Kanagawa2.jpg",

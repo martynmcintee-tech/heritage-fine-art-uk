@@ -220,11 +220,31 @@
       "Typography",
       "Wall Art UK"
     ],
-    "status": "active",
+    "status": "vaulted",
     "edition_limit": 150,
     "sales_count": 0,
     "created_at": "2026-09-12T22:16:52.773Z",
-    "vaulted_at": null,
+    "vaulted_at": "2026-10-01T00:19:34.228Z",
     "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/D%C3%B6rte_Helm_-_Bauhaus_Exhibition_Postcard_No._14.jpg"
+  },
+  {
+    "code": "JAPANESE",
+    "handle": "hasui-kawase-moonlit-pagoda-woodblock",
+    "title": "Hasui Kawase - Moonlit Pagoda Woodblock",
+    "artist": "Hasui Kawase (1927)",
+    "desc": "Atmospheric Japanese Shin-hanga landscape depicting a five-story pagoda reflecting over still water under a golden harvest moon.",
+    "tags": [
+      "Japanese Art",
+      "Shin Hanga",
+      "Woodblock",
+      "Zen",
+      "Nightscape"
+    ],
+    "status": "active",
+    "edition_limit": 150,
+    "sales_count": 0,
+    "created_at": "2026-10-01T00:19:34.228Z",
+    "vaulted_at": null,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Great_Wave_off_Kanagawa2.jpg"
   }
 ]
