@@ -910,10 +910,13 @@ app.post("/webhooks/stripe", async (req, res) => {
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
-      const shipping = session.shipping_details || session.customer_details;
+      const shipping =
+        session.collected_information?.shipping_details ||
+        session.shipping_details ||
+        session.customer_details;
       const metadata = session.metadata || {};
 
-      if (!shipping || !shipping.address) {
+      if (!shipping || !shipping.address || !shipping.address.line1) {
         console.warn("[STRIPE WEBHOOK]: Missing shipping address on session:", session.id);
         return res.status(200).send("No shipping address.");
       }
@@ -924,23 +927,26 @@ app.post("/webhooks/stripe", async (req, res) => {
       const prodigiOrder = await prodigi.createOrder({
         merchantReference: `STRIPE-${session.id.slice(-8)}`,
         recipient: {
-          name: shipping.name || session.customer_details?.name || "Art Collector",
+          name:
+            shipping.name ||
+            session.collected_information?.individual_name ||
+            session.customer_details?.name ||
+            "Art Collector",
           address1: shipping.address.line1,
           address2: shipping.address.line2 || "",
           zip: shipping.address.postal_code,
           city: shipping.address.city,
           province: shipping.address.state || "",
           countryCode: shipping.address.country || "GB",
-          email: session.customer_details?.email,
+          email: session.customer_details?.email || session.customer_email,
           phone: session.customer_details?.phone || shipping.phone || "",
         },
         items: [
           {
-            id: session.id,
+            id: `ITEM-${session.id.slice(-12)}`,
             sku: prodigiSku,
             copies: 1,
             artworkUrl: artworkUrl,
-            finish: "matte",
           },
         ],
         shippingMethod: "Budget", // Royal Mail 48 Tracked
