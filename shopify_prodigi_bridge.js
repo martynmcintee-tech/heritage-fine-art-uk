@@ -921,6 +921,20 @@ app.post("/webhooks/stripe", async (req, res) => {
         return res.status(200).send("No shipping address.");
       }
 
+      if (stripe && session.payment_intent) {
+        try {
+          const pi = await stripe.paymentIntents.retrieve(session.payment_intent, {
+            expand: ["latest_charge"],
+          });
+          if (pi.latest_charge && pi.latest_charge.refunded) {
+            console.log(`[STRIPE WEBHOOK]: Payment ${session.payment_intent} was refunded. Skipping Prodigi fulfillment.`);
+            return res.status(200).json({ skipped: true, reason: "Payment already refunded" });
+          }
+        } catch (piErr) {
+          console.warn("[STRIPE WEBHOOK]: Could not verify payment_intent refund status:", piErr.message);
+        }
+      }
+
       const prodigiSku = metadata.prodigiSku || resolveProdigiSku(metadata.sku);
       const artworkUrl = metadata.artworkUrl || resolveArtworkUrl({ sku: metadata.sku });
 
