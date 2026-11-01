@@ -43,6 +43,7 @@ const SKU_MAPPING = {
 
 // High-resolution public domain artwork asset registry
 const ARTWORK_REGISTRY = {
+  BOTANICA: "https://upload.wikimedia.org/wikipedia/commons/8/83/Quillaja_saponaria_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-119.jpg",
   JAPANESE: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Great_Wave_off_Kanagawa2.jpg",
   BRUTALIST: "https://upload.wikimedia.org/wikipedia/commons/a/a0/D%C3%B6rte_Helm_-_Bauhaus_Exhibition_Postcard_No._14.jpg",
   MORRIS: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Morris_Strawberry_Thief_1883.jpg",

@@ -240,11 +240,31 @@
       "Zen",
       "Nightscape"
     ],
-    "status": "active",
+    "status": "vaulted",
     "edition_limit": 150,
     "sales_count": 0,
     "created_at": "2026-10-01T00:19:34.228Z",
-    "vaulted_at": null,
+    "vaulted_at": "2026-11-01T00:44:44.680Z",
     "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Great_Wave_off_Kanagawa2.jpg"
+  },
+  {
+    "code": "BOTANICA",
+    "handle": "victorian-glasshouse-ferns-exotic-palms",
+    "title": "Victorian Glasshouse Ferns & Exotic Palms",
+    "artist": "Kew Botanical Archive (1892)",
+    "desc": "Fine antique lithograph of tropical conservatory ferns and royal palm fronds in rich emerald and sage tones. Dispatched on 200gsm matte art paper.",
+    "tags": [
+      "Botanical",
+      "Kew Gardens",
+      "Ferns",
+      "Victorian",
+      "Greenery"
+    ],
+    "status": "active",
+    "edition_limit": 150,
+    "sales_count": 0,
+    "created_at": "2026-11-01T00:44:44.680Z",
+    "vaulted_at": null,
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Quillaja_saponaria_-_K%C3%B6hler%E2%80%93s_Medizinal-Pflanzen-119.jpg"
   }
 ]
